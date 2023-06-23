@@ -1,0 +1,51 @@
+Enunciado 2do Parcial Teórico Tema 1
+1.	¿Qué significa CORS y dónde las configuro?
+CORS (Cross-Origin Resource Sharing) es un mecanismo de seguridad implementado en los navegadores web para controlar las solicitudes HTTP entre diferentes dominios. Permite restringir o permitir el acceso a los recursos de un sitio web desde otro dominio. CORS se configura en el program.cs, especificando los encabezados de respuesta adecuados, como "Access-Control-Allow-Origin", "Access-Control-Allow-Methods" y "Access-Control-Allow-Headers".
+
+2.	¿Cuál es la principal diferencia entre una petición GET y una POST?
+La principal diferencia entre una petición GET y una POST es cómo se envían los datos en la solicitud. En una petición GET, los parámetros se incluyen en la URL de la solicitud, mientras que en una petición POST, los datos se envían en el cuerpo de la solicitud. La petición GET se utiliza para recuperar datos del servidor, mientras que la petición POST se utiliza para enviar datos al servidor para su procesamiento.
+3.	¿Cuáles son los dos enfoques de EF Core? Detallar comandos que se utilizan para cada enfoque.
+Database First es un enfoque en el que se genera el modelo de entidades y las clases de contexto a partir de una base de datos existente. Esto implica que primero se crea o tiene una base de datos existente y luego se genera el código de Entity Framework basado en esa base de datos. Se utiliza cuando se tiene una base de datos ya diseñada y se desea generar el modelo de entidades y el contexto automáticamente a partir de ella.
+Code First, por otro lado, es un enfoque en el que se definen las clases de entidad y las relaciones en el código, y luego Entity Framework genera la base de datos a partir de esas clases. En este enfoque, primero se definen las clases de entidad en el código, junto con las configuraciones de mapeo si es necesario. Luego, Entity Framework crea o modifica la base de datos según las clases y configuraciones definidas.
+
+4.	¿Cuándo hablamos de fluent validation, a que nos referimos?
+Fluent Validation es una biblioteca de validación en .NET que proporciona una forma declarativa de definir reglas de validación para las clases de modelo. Permite definir reglas de validación de manera más legible y mantenible utilizando un enfoque fluido (fluent) para encadenar las reglas de validación. Esta biblioteca simplifica el proceso de validación de datos y proporciona mensajes de error claros y personalizados. Se utiliza para validar las entradas del usuario antes de procesarlas y garantizar que los datos cumplan con ciertas reglas de negocio.
+
+
+
+
+5.	Escribir un ejemplo en javascript de como harian una petición post a un servidor enviando un json que posea 3 propiedades (nombre, apellido, dni)
+Ejemplo de una petición POST en JavaScript enviando un JSON con 3 propiedades (nombre, apellido, dni):
+
+const url = 'https://example.com/api/endpoint'; // URL del servidor
+const data = {
+  nombre: 'John',
+  apellido: 'Doe',
+  dni: '123456789'
+};
+
+fetch(url, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(data)
+})
+  .then(response => response.json())
+  .then(result => {
+    console.log('Respuesta del servidor:', result);
+  })
+  .catch(error => {
+    console.error('Error en la petición:', error);
+  });
+
+6.	¿Para que utilizamos la libreria “mediator”?
+La librería "Mediator" se utiliza para implementar el patrón de diseño de mediador en una aplicación. El patrón de mediador se utiliza para promover el bajo acoplamiento y la comunicación indirecta entre los componentes de un sistema. En resumen, la librería "Mediator" se utiliza para facilitar la comunicación indirecta y el bajo acoplamiento entre los componentes de una aplicación mediante la implementación del patrón de mediador.
+7.	Para poder inyectar el context de la BD en un controller o en algun servicio, donde y como configuro dicha inyección? Escribir lineas de códigos necesarias. 
+Se configura en el program, dichas líneas de código son las siguientes:
+builder.Services.AddEntityFrameworkNpgsql()
+    .AddDbContext<ContextDb>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("ConexionDatabase")));
+Una vez configurado el program con el context, se puede inyectar en el controlador o en cualquier servicio agregando un atributo readonly con la clase. Y en el constructor pasarle como parámetro esta clase. 
+
+8.	¿Es correcto decir que una petición get puede recibir un parámetro por url y a su vez un body con algún objeto json particular? Justifique su respuesta.
+No, en una petición GET no se envía un body con un objeto JSON. Según las especificaciones del protocolo HTTP, las peticiones GET no deben contener un cuerpo de mensaje en la solicitud.La forma estándar de enviar parámetros en una petición GET es a través de la URL mediante la inclusión de parámetros de consulta (query parameters). Los parámetros de consulta se agregan al final de la URL y se separan del resto de la URL mediante el símbolo "?" y se pueden especificar en formato clave-valor.
