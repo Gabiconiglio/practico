@@ -1,0 +1,30 @@
+dotnet tool install --global dotnet-ef
+--
+dotnet ef migrations add PrimeraMigracion
+--
+dotnet ef database update
+---
+Dotnet ef dbcontext scaffold "conexion" Npgsql.EntityFrameworkCore.PostgreSQL --output-dir Models
+---
+builder.Services.AddControllers().AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<GetById_Business>());
+---
+builder.Services.AddDbContext<ContextDB>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("ConexionDataBase"));
+});
+--
+builder.Services.AddMediatR(typeof(GetById_Business.Manejador).Assembly);
+--
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowAnyOrigin();
+
+        });
+});
+--
+app.UseCors();

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Actualizar Docente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container-fluid bg-primary py-5">
+      <div class="container text-white">
+        <h1 class="display-3"><b>2do Parcial Tema 1</b></h1>
+        <p class="lead">Actualizar docente</p>
+      </div>
+    </div>
+    <div class="container">
+      <form>
+        <div class="mb-3">
+          <label for="txtNombre" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="txtNombre">
+        </div>
+        <div class="mb-3">
+          <label for="txtApellido" class="form-label">Apellido</label>
+          <input type="text" class="form-control" id="txtApellido">
+        </div>
+        <div class="mb-3">
+          <label for="txtEmail" class="form-label">Email</label>
+          <input type="text" class="form-control" id="txtEmail">
+        </div>
+        <div class="mb-3">
+          <label for="txtEdad" class="form-label">Edad</label>
+          <input type="number" class="form-control" id="txtEdad">
+        </div>
+        <div class="mb-3">
+          <label for="txtNivel" class="form-label">Nivel</label>
+          <input type="text" class="form-control" id="txtNivel" readonly>
+        </div>
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+      </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="/docenteService.js"></script>
+    
+    
+      <script>
+      // Función para cargar los datos del docente en los campos de entrada del formulario
+      function cargarDatosDocente(docente) {
+        document.getElementById('txtNombre').value = docente.nombre;
+        document.getElementById('txtApellido').value = docente.apellido;
+        document.getElementById('txtEmail').value = docente.email;
+        document.getElementById('txtEdad').value = docente.edad;
+        document.getElementById('txtNivel').value = docente.nivel;
+      }
+      // Llamar a la API y obtener los datos del docente
+      fetch('https://localhost:7005/api/docentes/GetDocentes')
+        .then(response => response.json())
+        .then(data => {
+          if (data.listDocentes.length > 0) {
+            var docente = data.listDocentes[0];
+            cargarDatosDocente(docente);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    </script>
+    <script>
+      // Asignar el evento de clic al botón "Actualizar"
+document.addEventListener('DOMContentLoaded', function () {
+  var btnActualizar = document.querySelector('button[type="submit"]');
+  btnActualizar.addEventListener('click', function (event) {
+    event.preventDefault(); // Evitar el envío del formulario por defecto
+    actualizarDocente();
+  });
+});
+    </script>
+    
+  </body>
+</html>
